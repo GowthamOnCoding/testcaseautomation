@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SECO Testing Framework</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.3.3"></script>
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+        .select2-search__field {
+            width: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>SECO Testing Framework</h1>
+        <i class="fas fa-bars hamburger" onclick="toggleMenu()"></i>
+        <ul>
+            <li><a href="#create-tc" onclick="showSection('create-tc')">Create TC</a></li>
+            <li><a href="#manage-tc" onclick="showSection('manage-tc')">Manage TC</a></li>
+        </ul>
+    </div>
+    <div id="create-tc" class="container">
+        <h3>Create Test Case</h3>
+        <form id="test-case-form" hx-post="/api/tcsubmit" hx-trigger="submit" hx-swap="innerHTML" hx-ext="json-enc">
+            <div class="row">
+                <div class="four columns">
+                    <label for="test-case-name">Test Case Name:</label>
+                    <input type="text" id="test-case-name" name="test_case_name" class="u-full-width" required>
+                </div>
+                <div class="four columns">
+                    <label for="aitnumber">AIT Number:</label>
+                    <select id="aitnumber" name="aitnumber" class="u-full-width">
+                        <option value="">Select an AIT Number</option>
+                    </select>
+                </div>
+            </div>
+            <div id="steps">
+                <div class="row step">
+                    <div class="three columns">
+                        <label for="step-name-0">Step Name:</label>
+                        <input type="text" id="step-name-0" name="step_name[]" class="u-full-width" required>
+                    </div>
+                    <div class="three columns">
+                        <label for="tcstep-0">TCStep:</label>
+                        <select id="tcstep-0" name="tcstep[]" class="u-full-width">
+                            <option value="">Select a TCStep</option>
+                        </select>
+                    </div>
+                    <div class="three columns">
+                        <label for="value-0">Values:</label>
+                        <input type="text" id="value-0" name="value[]" class="u-full-width" required>
+                    </div>
+                    <div class="three columns">
+                        <label for="expected-output-0">Expected Output:</label>
+                        <select id="expected-output-0" name="expected_output[]" class="u-full-width">
+                            <option value="">Select an Expected Output</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="add-step" class="button-primary">+ Add Step</button>
+            <button type="submit" class="button-primary">Submit</button>
+        </form>
+    </div>
+    <div id="manage-tc" class="container coming-soon">
+        <h3>Manage Test Cases</h3>
+        <p>Coming Soon</p>
+    </div>
+    <script>
+        function showSection(sectionId) {
+            document.getElementById('create-tc').style.display = (sectionId === 'create-tc') ? 'block' : 'none';
+            document.getElementById('manage-tc').style.display = (sectionId === 'manage-tc') ? 'block' : 'none';
+        }
+
+        function toggleMenu() {
+            const nav = document.querySelector('.navbar ul');
+            nav.classList.toggle('active');
+        }
+
+        let stepCounter = 1;
+        let tcsteps = '';
+        let aitnumbers = '';
+        let expectedOutputs = '';
+
+        function initializeSelect2(element) {
+            const select2Config = {
+                width: '100%',
+                placeholder: 'Search...',
+                allowClear: true,
+                dropdownParent: $(element).closest('.container'),
+                matcher: function(params, data) {
+                    if ($.trim(params.term) === '') {
+                        return data;
+                    }
+                    if (typeof data.text === 'undefined') {
+                        return null;
+                    }
+                    if (data.text.toLowerCase().indexOf(params.term.toLowerCase()) > -1) {
+                        return data;
+                    }
+                    return null;
+                }
+            };
+
+            if ($(element).is('select')) {
+                $(element).select2(select2Config);
+            } else {
+                $(element).find('select').each(function() {
+                    $(this).select2(select2Config);
+                });
+            }
+        }
+
+        function updateDropdownData() {
+            fetch('/api/tcsteps')
+                .then(response => response.text())
+                .then(data => {
+                    tcsteps = data;
+                    document.querySelectorAll('select[name="tcstep[]"]').forEach(select => {
+                        select.innerHTML = '<option value="">Select a TCStep</option>' + data;
+                        initializeSelect2(select);
+                    });
+                });
+
+            fetch('/api/aitnumbers')
+                .then(response => response.text())
+                .then(data => {
+                    aitnumbers = data;
+                    const aitnumberSelect = document.querySelector('#aitnumber');
+                    aitnumberSelect.innerHTML = '<option value="">Select an AIT Number</option>' + data;
+                    initializeSelect2(aitnumberSelect);
+                });
+
+            fetch('/api/expectedoutputs')
+                .then(response => response.text())
+                .then(data => {
+                    expectedOutputs = data;
+                    document.querySelectorAll('select[name="expected_output[]"]').forEach(select => {
+                        select.innerHTML = '<option value="">Select an Expected Output</option>' + data;
+                        initializeSelect2(select);
+                    });
+                });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            updateDropdownData();
+            $('#aitnumber').select2({
+                width: '100%',
+                placeholder: 'Search AIT Number...',
+                allowClear: true,
+                dropdownParent: $('#create-tc')
+            });
+        });
+
+        document.getElementById('add-step').addEventListener('click', function() {
+            const step = document.querySelector('.step');
+            if (!step) return;
+            
+            $(step).find('select').select2('destroy');
+            
+            const newStep = step.cloneNode(true);
+            newStep.id = `step-${stepCounter}`;
+            
+            newStep.querySelector('input[id^="step-name"]').value = '';
+            newStep.querySelector('input[id^="value"]').value = '';
+            
+            const tcstepSelect = newStep.querySelector('select[id^="tcstep"]');
+            const expectedOutputSelect = newStep.querySelector('select[id^="expected-output"]');
+            tcstepSelect.innerHTML = '<option value="">Select a TCStep</option>' + tcsteps;
+            expectedOutputSelect.innerHTML = '<option value="">Select an Expected Output</option>' + expectedOutputs;
+            
+            ['step-name', 'tcstep', 'value', 'expected-output'].forEach(prefix => {
+                const element = newStep.querySelector(`[id^="${prefix}"]`);
+                const label = newStep.querySelector(`label[for^="${prefix}"]`);
+                const newId = `${prefix}-${stepCounter}`;
+                element.id = newId;
+                label.setAttribute('for', newId);
+            });
+            
+            document.getElementById('steps').appendChild(newStep);
+            
+            initializeSelect2(step);
+            initializeSelect2(newStep);
+            
+            stepCounter++;
+        });
+
+        showSection('create-tc');
+    </script>
+</body>
+</html>
