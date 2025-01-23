@@ -159,7 +159,7 @@ func CollectServerMetrics(servers []string, username, password string) ([]Server
 	return metrics, nil
 }
 
-func ExecuteBackgroundCommandOnServer(host, username, password, command string) error {
+func ExecuteBackgroundCommandOnServer(host, username, password, command string) (int, error) {
 	config := &ssh.ClientConfig{
 		User: username,
 		Auth: []ssh.AuthMethod{
@@ -170,24 +170,26 @@ func ExecuteBackgroundCommandOnServer(host, username, password, command string) 
 
 	client, err := ssh.Dial("tcp", fmt.Sprintf("%s:22", host), config)
 	if err != nil {
-		return fmt.Errorf("failed to dial: %v", err)
+		return -1, err
 	}
 	defer client.Close()
 
 	session, err := client.NewSession()
 	if err != nil {
-		return fmt.Errorf("failed to create session: %v", err)
+		return -1, err
 	}
 	defer session.Close()
 
-	// Run command in background using nohup
 	backgroundCmd := fmt.Sprintf("nohup %s > /dev/null 2>&1 &", command)
 	err = session.Run(backgroundCmd)
 	if err != nil {
-		return fmt.Errorf("failed to run command: %v", err)
+		if exitError, ok := err.(*ssh.ExitError); ok {
+			return exitError.ExitStatus(), nil
+		}
+		return -1, err
 	}
 
-	return nil
+	return 0, nil
 }
 
 func KillProcessOnServer(host, username, password, processName string) error {

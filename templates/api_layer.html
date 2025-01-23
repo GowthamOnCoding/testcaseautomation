@@ -1,0 +1,36 @@
+{{ define "content" }}
+<h2>API Layer</h2>
+<div id="process-stats" class="api-section">
+    <h3>Process Stats</h3>
+    <button hx-get="/process-stats" hx-trigger="click" hx-target="#process-stats-result" hx-swap="innerHTML">Get Process Stats</button>
+    <div id="process-stats-result" class="result"></div>
+</div>
+
+<div id="resource-usage" class="api-section">
+    <h3>Resource Usage</h3>
+    <button hx-get="/resource-usage" hx-trigger="click" hx-target="#resource-usage-result" hx-swap="innerHTML">Get Resource Usage</button>
+    <div id="resource-usage-result" class="result"></div>
+</div>
+
+<div id="execute-command" class="api-section">
+    <h3>Execute Command</h3>
+    <form id="execute-command-form" hx-get="/execute-command" hx-trigger="submit" hx-target="#execute-command-result" hx-swap="innerHTML">
+        <label for="host">Host:</label>
+        <input type="text" id="host" name="host" required>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <label for="command">Command:</label>
+        <input type="text" id="command" name="command" required>
+        <button type="submit">Execute</button>
+    </form>
+    <div id="execute-command-result" class="result"></div>
+</div>
+
+<div id="collect-metrics" class="api-section">
+    <h3>Collect Metrics</h3>
+    <button hx-get="/collect-metrics" hx-trigger="click" hx-target="#collect-metrics-result" hx-swap="innerHTML">Collect Metrics</button>
+    <div id="collect-metrics-result" class="result"></div>
+</div>
+{{ end }}

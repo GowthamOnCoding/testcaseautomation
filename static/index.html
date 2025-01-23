@@ -18,6 +18,12 @@
         .select2-search__field {
             width: 100% !important;
         }
+        .container {
+            margin-top: 20px;
+        }
+        .result {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -27,59 +33,104 @@
         <ul>
             <li><a href="#create-tc" onclick="showSection('create-tc')">Create TC</a></li>
             <li><a href="#manage-tc" onclick="showSection('manage-tc')">Manage TC</a></li>
+            <li><a href="#api-layer" onclick="showSection('api-layer')">API Layer</a></li>
         </ul>
     </div>
-    <div id="create-tc" class="container">
-        <h3>Create Test Case</h3>
-        <form id="test-case-form" hx-post="/api/tcsubmit" hx-trigger="submit" hx-swap="innerHTML" hx-ext="json-enc">
-            <div class="row">
-                <div class="four columns">
-                    <label for="test-case-name">Test Case Name:</label>
-                    <input type="text" id="test-case-name" name="test_case_name" class="u-full-width" required>
-                </div>
-                <div class="four columns">
-                    <label for="aitnumber">AIT Number:</label>
-                    <select id="aitnumber" name="aitnumber" class="u-full-width">
-                        <option value="">Select an AIT Number</option>
-                    </select>
-                </div>
-            </div>
-            <div id="steps">
-                <div class="row step">
-                    <div class="three columns">
-                        <label for="step-name-0">Step Name:</label>
-                        <input type="text" id="step-name-0" name="step_name[]" class="u-full-width" required>
+
+    <div class="container">
+        <div id="create-tc" class="section">
+            <h3>Create Test Case</h3>
+            <form id="test-case-form" hx-post="/api/tcsubmit" hx-trigger="submit" hx-swap="innerHTML" hx-ext="json-enc">
+                <div class="row">
+                    <div class="four columns">
+                        <label for="test-case-name">Test Case Name:</label>
+                        <input type="text" id="test-case-name" name="test_case_name" class="u-full-width" required>
                     </div>
-                    <div class="three columns">
-                        <label for="tcstep-0">TCStep:</label>
-                        <select id="tcstep-0" name="tcstep[]" class="u-full-width">
-                            <option value="">Select a TCStep</option>
-                        </select>
-                    </div>
-                    <div class="three columns">
-                        <label for="value-0">Values:</label>
-                        <input type="text" id="value-0" name="value[]" class="u-full-width" required>
-                    </div>
-                    <div class="three columns">
-                        <label for="expected-output-0">Expected Output:</label>
-                        <select id="expected-output-0" name="expected_output[]" class="u-full-width">
-                            <option value="">Select an Expected Output</option>
+                    <div class="four columns">
+                        <label for="aitnumber">AIT Number:</label>
+                        <select id="aitnumber" name="aitnumber" class="u-full-width">
+                            <option value="">Select an AIT Number</option>
                         </select>
                     </div>
                 </div>
+                <div id="steps">
+                    <div class="row step">
+                        <div class="three columns">
+                            <label for="step-name-0">Step Name:</label>
+                            <input type="text" id="step-name-0" name="step_name[]" class="u-full-width" required>
+                        </div>
+                        <div class="three columns">
+                            <label for="tcstep-0">TCStep:</label>
+                            <select id="tcstep-0" name="tcstep[]" class="u-full-width">
+                                <option value="">Select a TCStep</option>
+                            </select>
+                        </div>
+                        <div class="three columns">
+                            <label for="value-0">Values:</label>
+                            <input type="text" id="value-0" name="value[]" class="u-full-width" required>
+                        </div>
+                        <div class="three columns">
+                            <label for="expected-output-0">Expected Output:</label>
+                            <select id="expected-output-0" name="expected_output[]" class="u-full-width">
+                                <option value="">Select an Expected Output</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="add-step" class="button-primary">+ Add Step</button>
+                <button type="submit" class="button-primary">Submit</button>
+            </form>
+        </div>
+
+        <div id="manage-tc" class="section" style="display:none;">
+            <h3>Manage Test Cases</h3>
+            <p>Coming Soon</p>
+        </div>
+
+        <div id="api-layer" class="section" style="display:none;">
+            <h2>API Layer</h2>
+            <div id="process-stats" class="api-section">
+                <h3>Process Stats</h3>
+                <button onclick="fetchProcessStats()">Get Process Stats</button>
+                <div id="process-stats-result" class="result"></div>
             </div>
-            <button type="button" id="add-step" class="button-primary">+ Add Step</button>
-            <button type="submit" class="button-primary">Submit</button>
-        </form>
+
+            <div id="resource-usage" class="api-section">
+                <h3>Resource Usage</h3>
+                <button onclick="fetchResourceUsage()">Get Resource Usage</button>
+                <div id="resource-usage-result" class="result"></div>
+            </div>
+
+            <div id="execute-command" class="api-section">
+                <h3>Execute Command</h3>
+                <form id="execute-command-form">
+                    <label for="host">Host:</label>
+                    <input type="text" id="host" name="host" required>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <label for="command">Command:</label>
+                    <input type="text" id="command" name="command" required>
+                    <button type="button" onclick="executeCommand()">Execute</button>
+                </form>
+                <div id="execute-command-result" class="result"></div>
+            </div>
+
+            <div id="collect-metrics" class="api-section">
+                <h3>Collect Metrics</h3>
+                <button onclick="collectMetrics()">Collect Metrics</button>
+                <div id="collect-metrics-result" class="result"></div>
+            </div>
+        </div>
     </div>
-    <div id="manage-tc" class="container coming-soon">
-        <h3>Manage Test Cases</h3>
-        <p>Coming Soon</p>
-    </div>
+
     <script>
         function showSection(sectionId) {
-            document.getElementById('create-tc').style.display = (sectionId === 'create-tc') ? 'block' : 'none';
-            document.getElementById('manage-tc').style.display = (sectionId === 'manage-tc') ? 'block' : 'none';
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
         }
 
         function toggleMenu() {
@@ -194,6 +245,42 @@
             
             stepCounter++;
         });
+
+        function fetchProcessStats() {
+            fetch('/process-stats')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('process-stats-result').innerText = JSON.stringify(data, null, 2);
+                });
+        }
+
+        function fetchResourceUsage() {
+            fetch('/resource-usage')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('resource-usage-result').innerText = JSON.stringify(data, null, 2);
+                });
+        }
+
+        function executeCommand() {
+            const form = document.getElementById('execute-command-form');
+            const formData = new FormData(form);
+            const params = new URLSearchParams(formData).toString();
+
+            fetch(`/execute-command?${params}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('execute-command-result').innerText = data;
+                });
+        }
+
+        function collectMetrics() {
+            fetch('/collect-metrics')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('collect-metrics-result').innerText = JSON.stringify(data, null, 2);
+                });
+        }
 
         showSection('create-tc');
     </script>
