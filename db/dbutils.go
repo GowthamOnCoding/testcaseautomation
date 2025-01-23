@@ -1,10 +1,13 @@
-package db
+package dbutils
 
 import (
 	"database/sql"
-	_ "github.com/denisenkom/go-mssqldb"
+	"fmt"
+	"strings"
 	"testcaseautomation/constants"
 	"time"
+
+	_ "github.com/denisenkom/go-mssqldb"
 )
 
 func ConnectToSQLServer() (*sql.DB, error) {
@@ -89,4 +92,69 @@ func InsertScanWindowRecords(db *sql.DB, aitNo, dbType, startTime, endTime strin
 		}
 	}
 	return nil
+}
+
+func SelectAndInsertRowsToTable(db *sql.DB, selectQuery string, newValues map[string]interface{}) error {
+	// Execute the SELECT query
+	rows, err := db.Query(selectQuery)
+	if err != nil {
+		return fmt.Errorf("error executing select query: %v", err)
+	}
+	defer rows.Close()
+
+	// Get column names from the SELECT query
+	columns, err := rows.Columns()
+	if err != nil {
+		return fmt.Errorf("error getting columns: %v", err)
+	}
+
+	// Prepare a slice to hold the column values
+	values := make([]interface{}, len(columns))
+	valuePtrs := make([]interface{}, len(columns))
+	for i := range values {
+		valuePtrs[i] = &values[i]
+	}
+
+	// Iterate over the rows and convert to INSERT statements
+	for rows.Next() {
+		err := rows.Scan(valuePtrs...)
+		if err != nil {
+			return fmt.Errorf("error scanning row: %v", err)
+		}
+
+		// Update values with new values
+		for col, newVal := range newValues {
+			for i, column := range columns {
+				if column == col {
+					values[i] = newVal
+				}
+			}
+		}
+
+		// Build the INSERT statement
+		insertQuery := buildInsertQuery("KAFKA_STAT", columns, values)
+		_, err = db.Exec(insertQuery)
+		if err != nil {
+			return fmt.Errorf("error executing insert query: %v", err)
+		}
+	}
+
+	return nil
+}
+
+func buildInsertQuery(table string, columns []string, values []interface{}) string {
+	columnsStr := strings.Join(columns, ", ")
+	valuesStr := make([]string, len(values))
+	for i, value := range values {
+		switch v := value.(type) {
+		case string:
+			valuesStr[i] = fmt.Sprintf("'%s'", v)
+		case []byte:
+			valuesStr[i] = fmt.Sprintf("'%s'", string(v))
+		default:
+			valuesStr[i] = fmt.Sprintf("%v", v)
+		}
+	}
+	valuesJoined := strings.Join(valuesStr, ", ")
+	return fmt.Sprintf("INSERT INTO %s (%s) VALUES (%s)", table, columnsStr, valuesJoined)
 }

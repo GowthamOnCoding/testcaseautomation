@@ -1,10 +1,12 @@
 package main
 
 import (
+	"database/sql"
 	"html/template"
 	"log"
 	"net/http"
 	"path/filepath"
+	"testcaseautomation/db"
 	"testcaseautomation/handlers"
 )
 
@@ -62,5 +64,17 @@ func main() {
 
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatalf("Error starting server: %v", err)
+	}
+}
+
+func SelectInsert(db *sql.DB) {
+	selectQuery := "SELECT * FROM KAFKA_STAT WHERE CONDITION"
+	newValues := map[string]interface{}{
+		"STATUS": "NEW_STATUS",
+		// Add other columns and their new values here
+	}
+	err := dbutils.SelectAndInsertRowsToTable(db, selectQuery, newValues)
+	if err != nil {
+		log.Fatalf("Error cloning and inserting rows: %v", err)
 	}
 }
