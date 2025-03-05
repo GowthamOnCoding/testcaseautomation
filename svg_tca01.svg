@@ -1,0 +1,116 @@
+<svg width="2000" height="1300" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Background -->
+ <!-- Title -->
+ <!-- Left Column: Test Case Management -->
+ <!-- TC Automation UI -->
+ <!-- Test Case Execution Module -->
+ <!-- Reporting Module -->
+ <!-- Center Column: Camel Integration Layer -->
+ <!-- Subcomponents -->
+ <!-- Right Column: Infrastructure -->
+ <!-- Linux Servers -->
+ <!-- Kafka Cluster -->
+ <!-- SQL Database -->
+ <!-- Interaction Arrows -->
+ <!-- UI to Execution Module -->
+ <!-- Execution Module to Camel -->
+ <!-- Camel to Reporting -->
+ <!-- Camel SQL to Database -->
+ <!-- Camel SSH to Linux Servers -->
+ <!-- Camel Kafka to Kafka Cluster -->
+ <!-- Arrowhead Definitions -->
+ <defs>
+  <marker id="arrowhead-blue" markerHeight="7" markerWidth="10" orient="auto" refX="9" refY="3.5">
+   <polygon fill="#3498db" id="svg_1" points="0 0, 10 3.5, 0 7"/>
+  </marker>
+  <marker id="arrowhead-green" markerHeight="7" markerWidth="10" orient="auto" refX="9" refY="3.5">
+   <polygon fill="#2ecc71" id="svg_2" points="0 0, 10 3.5, 0 7"/>
+  </marker>
+  <marker id="arrowhead-red" markerHeight="7" markerWidth="10" orient="auto" refX="9" refY="3.5">
+   <polygon fill="#e74c3c" id="svg_4" points="0 0, 10 3.5, 0 7"/>
+  </marker>
+  <marker id="arrowhead-gray" markerHeight="7" markerWidth="10" orient="auto" refX="9" refY="3.5">
+   <polygon fill="#2c3e50" id="svg_5" points="0 0, 10 3.5, 0 7"/>
+  </marker>
+ </defs>
+ <!-- Future Enhancements Note -->
+ <g class="layer">
+  <title>Layer 1</title>
+  <rect fill="#f4f4f8" height="1433" id="svg_6" width="2000" x="-119" y="-125"/>
+  <text fill="#2c3e50" font-size="24" font-weight="bold" id="svg_7" text-anchor="middle" transform="matrix(1 0 0 1 0 0)" x="993" y="63">SECO Test Case Management System Architecture</text>
+  <rect fill="white" height="245" id="svg_8" rx="10" ry="10" stroke="#3498db" stroke-width="3" transform="matrix(1 0 0 1 0 0)" width="350" x="50" y="100"/>
+  <text fill="#3498db" font-size="16" font-weight="bold" id="svg_9" text-anchor="middle" x="225" y="130">TC Automation UI</text>
+  <rect fill="#e8f4f8" height="125" id="svg_10" rx="5" ry="5" stroke="#3498db" transform="matrix(1 0 0 1 0 0)" width="300" x="75" y="170"/>
+  <text fill="#2c3e50" font-size="12" id="svg_11" text-anchor="middle" x="225" y="200">
+   <tspan dy="0" id="svg_12" x="225">Test Case Creation Interface</tspan>
+   <tspan dy="20" id="svg_13" x="225">Execution Request Handler</tspan>
+   <tspan dy="20" id="svg_14" x="225">Result Visualization Panel</tspan>
+   <tspan dy="20" id="svg_15" x="225">User Management</tspan>
+  </text>
+  <rect fill="white" height="241" id="svg_16" rx="10" ry="10" stroke="#2ecc71" stroke-width="3" transform="matrix(1 0 0 1 0 0)" width="350" x="50" y="450"/>
+  <text fill="#2ecc71" font-size="16" font-weight="bold" id="svg_17" text-anchor="middle" transform="matrix(1 0 0 1 0 0)" x="225" y="480">Test Case Execution Module</text>
+  <rect fill="#e8f8f0" height="125" id="svg_18" rx="5" ry="5" stroke="#2ecc71" transform="matrix(1 0 0 1 0 0)" width="300" x="75" y="520"/>
+  <text fill="#2c3e50" font-size="12" id="svg_19" text-anchor="middle" x="225" y="550">
+   <tspan dy="0" id="svg_20" x="225">Test Case Scheduler</tspan>
+   <tspan dy="20" id="svg_21" x="225">Execution Engine</tspan>
+   <tspan dy="20" id="svg_22" x="225">Result Collector</tspan>
+   <tspan dy="20" id="svg_23" x="225">Environment Manager</tspan>
+  </text>
+  <rect fill="white" height="235" id="svg_24" rx="10" ry="10" stroke="#9b59b6" stroke-width="3" transform="matrix(1 0 0 1 0 0)" width="350" x="50" y="800"/>
+  <text fill="#9b59b6" font-size="16" font-weight="bold" id="svg_25" text-anchor="middle" x="225" y="830">Reporting Module</text>
+  <rect fill="#f4e8f8" height="124" id="svg_26" rx="5" ry="5" stroke="#9b59b6" transform="matrix(1 0 0 1 0 0)" width="300" x="75" y="870"/>
+  <text fill="#2c3e50" font-size="12" id="svg_27" text-anchor="middle" x="225" y="900">
+   <tspan dy="0" id="svg_28" x="225">Report Generator</tspan>
+   <tspan dy="20" id="svg_29" x="225">Data Analyzer</tspan>
+   <tspan dy="20" id="svg_30" x="225">Visualization Tool</tspan>
+   <tspan dy="20" id="svg_31" x="225">Export Manager</tspan>
+  </text>
+  <rect fill="white" height="834" id="svg_32" rx="10" ry="10" stroke="#f39c12" stroke-width="3" width="350" x="499" y="87"/>
+  <text fill="#f39c12" font-size="16" font-weight="bold" id="svg_33" text-anchor="middle" x="675" y="130">Camel Integration Layer</text>
+  <rect fill="#fff3e0" height="100" id="svg_34" rx="5" ry="5" stroke="#f39c12" transform="matrix(1 0 0 1 0 0)" width="300" x="525" y="170"/>
+  <text fill="#2c3e50" font-weight="bold" id="svg_35" text-anchor="middle" transform="matrix(1 0 0 1 0 0)" x="675" y="210">camel-http</text>
+  <rect fill="#fff3e0" height="100" id="svg_36" rx="5" ry="5" stroke="#f39c12" width="300" x="525" y="290"/>
+  <text fill="#2c3e50" font-weight="bold" id="svg_37" text-anchor="middle" x="675" y="330">camel-ssh</text>
+  <rect fill="#fff3e0" height="100" id="svg_38" rx="5" ry="5" stroke="#f39c12" width="300" x="525" y="410"/>
+  <text fill="#2c3e50" font-weight="bold" id="svg_39" text-anchor="middle" x="675" y="450">camel-smtp</text>
+  <rect fill="#fff3e0" height="100" id="svg_40" rx="5" ry="5" stroke="#f39c12" width="300" x="525" y="530"/>
+  <text fill="#2c3e50" font-weight="bold" id="svg_41" text-anchor="middle" x="675" y="570">camel-kafka</text>
+  <rect fill="#fff3e0" height="100" id="svg_42" rx="5" ry="5" stroke="#f39c12" transform="matrix(1 0 0 1 0 0)" width="300" x="525" y="650"/>
+  <text fill="#2c3e50" font-weight="bold" id="svg_43" text-anchor="middle" transform="matrix(1 0 0 1 0 0) matrix(1 0 0 1 0 0)" x="675" y="690">camel-sql</text>
+  <rect fill="white" height="300" id="svg_44" rx="10" ry="10" stroke="#2c3e50" stroke-width="3" transform="matrix(1 0 0 1 0 0)" width="350" x="950" y="100"/>
+  <text fill="#2c3e50" font-size="16" font-weight="bold" id="svg_45" text-anchor="middle" x="1125" y="130">Linux Test Environments</text>
+  <rect fill="#e6e6e6" height="142" id="svg_46" rx="5" ry="5" stroke="#2c3e50" transform="matrix(1 0 0 1 0 0)" width="300" x="975" y="170"/>
+  <text fill="#2c3e50" font-size="12" id="svg_47" text-anchor="middle" x="1125" y="210">
+   <tspan dy="0" id="svg_48" x="1125">Test Server 1</tspan>
+   <tspan dy="20" id="svg_49" x="1125">Test Server 2</tspan>
+   <tspan dy="20" id="svg_50" x="1125">Test Server 3</tspan>
+   <tspan dy="20" id="svg_51" x="1125">Staging Server</tspan>
+  </text>
+  <rect fill="white" height="250" id="svg_52" rx="10" ry="10" stroke="#2ecc71" stroke-width="3" transform="matrix(1 0 0 1 0 0)" width="350" x="954" y="440"/>
+  <text fill="#2ecc71" font-size="16" font-weight="bold" id="svg_53" text-anchor="middle" x="1125" y="480">Kafka Cluster</text>
+  <rect fill="#e8f8f0" height="122" id="svg_54" rx="5" ry="5" stroke="#2ecc71" transform="matrix(1 0 0 1 0 0)" width="300" x="975" y="520"/>
+  <text fill="#2c3e50" font-size="12" id="svg_55" text-anchor="middle" x="1125" y="550">
+   <tspan dy="0" id="svg_56" x="1125">Test Execution Topic</tspan>
+   <tspan dy="20" id="svg_57" x="1125">Result Streaming Topic</tspan>
+   <tspan dy="20" id="svg_58" x="1125">Notification Topic</tspan>
+   <tspan dy="20" id="svg_59" x="1125">Logging Topic</tspan>
+  </text>
+  <rect fill="white" height="242" id="svg_60" rx="10" ry="10" stroke="#e74c3c" stroke-width="3" transform="matrix(1 0 0 1 0 0)" width="350" x="950" y="800"/>
+  <text fill="#e74c3c" font-size="16" font-weight="bold" id="svg_61" text-anchor="middle" x="1125" y="830">SQL Database</text>
+  <rect fill="#fde7e9" height="122" id="svg_62" rx="5" ry="5" stroke="#e74c3c" transform="matrix(1 0 0 1 0 0)" width="300" x="975" y="870"/>
+  <text fill="#2c3e50" font-size="12" id="svg_63" text-anchor="middle" x="1125" y="900">
+   <tspan dy="0" id="svg_64" x="1125">TC_MASTERS</tspan>
+   <tspan dy="20" id="svg_65" x="1125">TEST_STEPS</tspan>
+   <tspan dy="20" id="svg_66" x="1125">EXECUTION_LOG</tspan>
+   <tspan dy="20" id="svg_67" x="1125">RESULTS_TABLE</tspan>
+  </text>
+  <path d="M225,700 L225,800" fill="none" stroke="#9b59b6" stroke-width="3" marker-end="url(#arrowhead-red)"/>
+  <path d="m403,245l118,0" fill="none" id="svg_68" marker-end="url(#arrowhead-blue)" stroke="#3498db" stroke-width="2" transform="matrix(1 0 0 1 0 0) matrix(1 0 0 1 0 0)"/>
+  <path d="m825,726l125,144" fill="none" id="svg_71" marker-end="url(#arrowhead-red)" stroke="#e74c3c" stroke-width="2" transform="matrix(1 0 0 1 0 0)"/>
+  <path d="m826,330l124,-3" fill="none" id="svg_72" marker-end="url(#arrowhead-gray)" stroke="#2c3e50" stroke-width="2"/>
+  <path d="m826,544l127,-2" fill="none" id="svg_73" marker-end="url(#arrowhead-green)" stroke="#2ecc71" stroke-width="2"/>
+  <rect fill="#fff3e0" height="100" id="svg_75" rx="5" ry="5" stroke="#f39c12" width="300" x="522" y="777"/>
+  <text fill="#2c3e50" font-weight="bold" id="svg_77" text-anchor="middle" transform="matrix(1 0 0 1 0 0) matrix(1 0 0 1 0 0)" x="671" y="810">camel-jdbc</text>
+  <path d="m498,561l-97,0" fill="none" id="svg_3" marker-end="url(#arrowhead-green)" stroke="#2ecc71" stroke-width="2" transform="matrix(1 0 0 1 0 0)"/>
+ </g>
+</svg>
